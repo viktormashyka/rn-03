@@ -10,20 +10,8 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
-  Button,
   ImageBackground,
 } from "react-native";
-// import * as Font from "expo-font";
-// import { AppLoading } from "expo";
-// import { classic } from "react-native-web/dist/cjs/exports/StyleSheet/compiler";
-// import { TouchableOpacity } from "react-native-web";
-
-// const loadFonts = async () => {
-//   await Font.loadAsync({
-//     "Roboto-Regular": require("../../assets/fonts/Roboto/Roboto-Regular.ttf"),
-//     "Roboto-Bold": require("../../assets/fonts/Roboto/Roboto-Bold.ttf"),
-//   });
-// };
 
 const initialState = { name: "", email: "", password: "" };
 
@@ -31,7 +19,6 @@ const RegistrationScreen = ({ navigation, route }) => {
   console.log("Platform.OS: ", Platform.OS);
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  // const [iasReady, setIasReady] = useState(false);
 
   const [dimensions, setDimensions] = useState(
     Dimensions.get("window").width - 16 * 2
@@ -56,33 +43,23 @@ const RegistrationScreen = ({ navigation, route }) => {
     setState(initialState);
 
     navigation.navigate("Home", {
-      screen: "Setting",
+      screen: "Posts",
       params: { userId: "e2ee4" },
     });
   };
-
-  // if (!iasReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={loadFonts}
-  //       onFinish={() => setIasReady(true)}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
 
   // const { userId } = route.params;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <ImageBackground
-          style={styles.image}
-          source={require("../../img/Photo_BG_1.jpg")}
-        />
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
+          <ImageBackground
+            style={styles.image}
+            source={require("../../img/Photo_BG_1.jpg")}
+          />
           <View
             style={{
               ...styles.form,
@@ -121,20 +98,23 @@ const RegistrationScreen = ({ navigation, route }) => {
             />
             <TouchableOpacity
               activeOpacity={0.8}
-              title={"Зареєструватися"}
               style={styles.button}
               onPress={onLogin}
-            />
-            <Text style={styles.text}>Вже є акаунт?</Text>
-            <Button
-              title="Увійти"
+            >
+              <Text style={styles.text}>Зареєструватися</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               onPress={() =>
                 navigation.navigate("Login", {
                   sessionId: 45,
                   userId: "22e24",
                 })
               }
-            />
+            >
+              <Text style={styles.text}>
+                Вже є акаунт? <Text style={styles.text}>Увійти</Text>
+              </Text>
+            </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </View>
@@ -146,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    marginTop: "66%",
+    marginTop: "50%",
     // paddingHorizontal: 16,
     backgroundColor: "#fff",
     borderTopStartRadius: 25,
@@ -186,15 +166,7 @@ const styles = StyleSheet.create({
 
   button: {
     height: 50,
-    fontFamily: "Roboto-Regular",
-    fontStyle: "normal",
-    fontSize: 16,
-    lineHeight: 19,
-    textAlign: "center",
-    color: "#FFFFFF",
     marginTop: 43,
-    paddingHorizontal: 16,
-    paddingVertical: 32,
     gap: 12,
     borderWidth: 1,
     ...Platform.select({
@@ -214,11 +186,21 @@ const styles = StyleSheet.create({
     lineHeight: 19,
   },
 
-  // btnTitle: {
-  //   color: Platform.OS === "ios" ? "#4169e1" : "#f0f8ff",
-  //   fontSize: 18,
-  //   fontFamily: "Roboto-Regular",
-  // },
+  btnTitle: {
+    color: Platform.OS === "ios" ? "#4169e1" : "#f0f8ff",
+    fontFamily: "Roboto-Regular",
+    fontStyle: "normal",
+    fontSize: 16,
+    lineHeight: 19,
+    textAlign: "center",
+  },
+
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default RegistrationScreen;
